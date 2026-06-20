@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}AC073-VANUR | Report{% endblock %}
+
+{% block content %}
+<div class="report-header">
+  <h2>Report</h2>
+  <a href="{{ url_for('export_xlsx') }}" class="btn btn-export btn-block-mobile">Export .xlsx</a>
+</div>
+
+{% if records %}
+<div class="table-wrap desktop-only">
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Part Number</th>
+        <th>BLO Name</th>
+        <th>BLO Designation</th>
+        <th>BLO Mobile Number</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ record.part_number }}</td>
+        <td>{{ record.blo_name }}</td>
+        <td>{{ record.blo_designation }}</td>
+        <td>
+          <a href="tel:{{ record.blo_mobile }}" class="phone-link">{{ record.blo_mobile }}</a>
+        </td>
+        <td>{{ record.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="mobile-cards mobile-only">
+  {% for record in records %}
+  <article class="record-card">
+    <div class="record-card-header">
+      <span class="record-badge">#{{ loop.index }}</span>
+      <span class="record-date">{{ record.created_at.strftime('%d %b %Y, %H:%M') }}</span>
+    </div>
+    <dl class="record-details">
+      <div class="detail-row">
+        <dt>Part Number</dt>
+        <dd>{{ record.part_number }}</dd>
+      </div>
+      <div class="detail-row">
+        <dt>BLO Name</dt>
+        <dd>{{ record.blo_name }}</dd>
+      </div>
+      <div class="detail-row">
+        <dt>BLO Designation</dt>
+        <dd>{{ record.blo_designation }}</dd>
+      </div>
+      <div class="detail-row">
+        <dt>BLO Mobile</dt>
+        <dd>
+          <a href="tel:{{ record.blo_mobile }}" class="phone-link phone-btn">
+            {{ record.blo_mobile }}
+          </a>
+        </dd>
+      </div>
+    </dl>
+  </article>
+  {% endfor %}
+</div>
+
+<p class="record-count">Total records: {{ records|length }}</p>
+{% else %}
+<p class="empty-state">No records found. <a href="{{ url_for('index') }}">Add your first record</a>.</p>
+{% endif %}
+{% endblock %}

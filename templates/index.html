@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}AC073-VANUR | Data Entry{% endblock %}
+
+{% block content %}
+<h2>Enter Record</h2>
+<form id="entry-form" action="{{ url_for('save') }}" method="post" class="form" novalidate>
+  <div class="form-group">
+    <label for="part_number">Part Number</label>
+    <input
+      type="text"
+      id="part_number"
+      name="part_number"
+      required
+      autocomplete="off"
+      inputmode="text"
+      placeholder="Enter part number"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="blo_name">BLO Name</label>
+    <input
+      type="text"
+      id="blo_name"
+      name="blo_name"
+      required
+      autocomplete="name"
+      inputmode="text"
+      placeholder="Enter BLO name"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="blo_designation">BLO Designation</label>
+    <input
+      type="text"
+      id="blo_designation"
+      name="blo_designation"
+      required
+      autocomplete="organization-title"
+      inputmode="text"
+      placeholder="Enter BLO designation"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="blo_mobile">BLO Mobile Number</label>
+    <input
+      type="tel"
+      id="blo_mobile"
+      name="blo_mobile"
+      required
+      autocomplete="tel"
+      inputmode="tel"
+      pattern="[0-9+\-\s()]{7,15}"
+      placeholder="Enter mobile number"
+    >
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block">Save to SQL Server</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='app.js') }}" defer></script>
+{% endblock %}

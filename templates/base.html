@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="AC073-VANUR">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>{% block title %}AC073-VANUR{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  {% block scripts %}{% endblock %}
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-top">
+        <h1>AC073-VANUR</h1>
+        <nav class="nav-desktop" aria-label="Main navigation">
+          <a href="{{ url_for('index') }}" class="nav-link {% if active_page == 'entry' %}active{% endif %}">Data Entry</a>
+          <a href="{{ url_for('report') }}" class="nav-link {% if active_page == 'report' %}active{% endif %}">Report</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <main class="card">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+    <nav class="nav-mobile" aria-label="Mobile navigation">
+      <a href="{{ url_for('index') }}" class="nav-mobile-link {% if active_page == 'entry' %}active{% endif %}">
+        <span class="nav-icon" aria-hidden="true">&#9998;</span>
+        <span>Entry</span>
+      </a>
+      <a href="{{ url_for('report') }}" class="nav-mobile-link {% if active_page == 'report' %}active{% endif %}">
+        <span class="nav-icon" aria-hidden="true">&#128202;</span>
+        <span>Report</span>
+      </a>
+    </nav>
+  </div>
+</body>
+</html>
